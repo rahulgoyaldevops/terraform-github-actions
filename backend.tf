@@ -1,6 +1,6 @@
 # ============================================================================
 # Terraform Remote State Backend with Azure Storage Blob Leases
-# Engineering Lead: Rahul Goyal
+# Senior DevOps Engineer: Rahul Goyal
 # ============================================================================
 
 terraform {
