@@ -14,13 +14,6 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  ARM_USE_OIDC: "true"
-  TF_IN_AUTOMATION: "true"
-
 jobs:
   validate_and_lint:
     name: "Terraform Lint, Format & Validate"
@@ -46,8 +39,7 @@ jobs:
   live_apply:
     name: "Production Terraform Apply (Azure OIDC)"
     needs: validate_and_lint
-    # Runs ONLY when triggered manually via workflow_dispatch AND Azure credentials are provided
-    if: github.event_name == 'workflow_dispatch' && env.ARM_CLIENT_ID != ''
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: production
     steps:
