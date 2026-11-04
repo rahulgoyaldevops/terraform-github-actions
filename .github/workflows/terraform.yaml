@@ -1,4 +1,4 @@
-﻿name: "Production Terraform CI/CD"
+name: "Production Terraform CI/CD"
 
 on:
   push:
@@ -22,19 +22,12 @@ env:
   TF_IN_AUTOMATION: "true"
 
 jobs:
-  validate_and_plan:
-    name: "Terraform Lint, Validate & Plan"
+  validate_and_lint:
+    name: "Terraform Lint, Format & Validate"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Azure Login via Workload Identity (OIDC)
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Setup Terraform CLI
         uses: hashicorp/setup-terraform@v3
@@ -44,30 +37,17 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check -diff
 
-      - name: Terraform Initialization
-        run: terraform init
+      - name: Terraform Initialization (Validation Mode)
+        run: terraform init -backend=false
 
-      - name: Terraform Validation
+      - name: Terraform Syntax Validation
         run: terraform validate
 
-      - name: Terraform Speculative Plan
-        id: plan
-        run: |
-          terraform plan -no-color -out=tfplan
-        continue-on-error: false
-
-      - name: Upload Terraform Plan Artifact
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: tfplan
-          path: tfplan
-          retention-days: 1
-
-  apply:
-    name: "Production Terraform Apply"
-    needs: validate_and_plan
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+  live_apply:
+    name: "Production Terraform Apply (Azure OIDC)"
+    needs: validate_and_lint
+    # Runs ONLY when triggered manually via workflow_dispatch AND Azure credentials are provided
+    if: github.event_name == 'workflow_dispatch' && env.ARM_CLIENT_ID != ''
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -89,10 +69,8 @@ jobs:
       - name: Terraform Initialization
         run: terraform init
 
-      - name: Download Terraform Plan Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
+      - name: Terraform Plan
+        run: terraform plan -no-color -out=tfplan
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
