@@ -123,11 +123,20 @@ git push origin main
 - [ ] Add drift detection on schedule (cron)
 - [ ] Add Terraform state backend (Azure Storage with encryption)
 - [ ] Add branch protection + required status checks
-
 ---
 
 <div align="center">
 
-**Built by [Rahul Goyal](https://github.com/rahulgoyaldevops)** — Senior DevOps & Cloud Engineer | 14+ Years
+<sub>Designed & Implemented by <b><a href="https://github.com/rahulgoyaldevops">Rahul Goyal</a></b> — Senior DevOps & Cloud Platform Engineer (14+ Years Total IT)</sub>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/rahulgoyaldevops/" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/rahulgoyaldevops?tab=repositories" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-Repositories-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" />
+  </a>
+</p>
 
 </div>
