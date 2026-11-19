@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🔄 Terraform + GitHub Actions — Azure CI/CD Pipeline
-
+[![Production Terraform CI/CD](https://github.com/rahulgoyaldevops/terraform-github-actions/actions/workflows/terraform.yaml/badge.svg)](https://github.com/rahulgoyaldevops/terraform-github-actions/actions/workflows/terraform.yaml)
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 [![Terraform](https://img.shields.io/badge/Terraform-v1.5+-623CE4?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![Azure](https://img.shields.io/badge/Azure-OIDC_Auth-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
